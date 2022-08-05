@@ -10,17 +10,17 @@ namespace Picture_To_Char
     internal class TaskUtils
     {
 
-        public static List<double> GetGrayScaleList()
+        public static List<int> GetGrayScaleList()
         {
             Bitmap img = new Bitmap(Environment.CurrentDirectory + "\\Pictures\\download.png");
-            List<double> values = new List<double>();
+            List<int> values = new List<int>();
 
             for (int i = 0; i < img.Width; i++)
             {
                 for (int j = 0; j < img.Height; j++)
                 {
                     Color color = img.GetPixel(i, j);
-                    double grayscale = (0.299 * color.R) + (0.587 * color.G) + (0.114 * color.B);
+                    int grayscale = (int)((0.299 * color.R) + (0.587 * color.G) + (0.114 * color.B));
                     values.Add(grayscale);
                 }
             }
@@ -29,22 +29,25 @@ namespace Picture_To_Char
             return values;
         }
 
-        public static double GetGrayScale(int i, int j)
+        public static int GetGrayScale(int i, int j)
         {
-            double grayscale;
+            int grayscale;
 
             using (Bitmap img = new Bitmap(Environment.CurrentDirectory + "\\Pictures\\download.png"))
             {
                 Color color = img.GetPixel(i, j);
-                grayscale = (0.299 * color.R) + (0.587 * color.G) + (0.114 * color.B);
+                grayscale = (int)((0.299 * color.R) + (0.587 * color.G) + (0.114 * color.B));
             }
 
             return grayscale;
         }
 
-        public static char GrayScaleToChar(int colorCount, double grayscale, string charLine)
+        public static char GrayScaleToChar(List<int> values, int colorCount, int grayscale, string charLine)
         {
-            int charNum = (int)(colorCount / grayscale);
+            double charNum = (double)colorCount / charLine.Length;
+            int nunInList = values.Distinct().ToList().IndexOf(grayscale);
+
+            
 
             //
             //192 / 96
@@ -52,7 +55,7 @@ namespace Picture_To_Char
             //96
             //
             //@M/BH/EN/R#/KW/XD/FP/QA/SU/Zb/de/hx/*8/Gm/&0/4L/OV/Yk/pq/5T/ag/ns/69/ow/z$/CI/u2/3J/cf/ry/%1/v7/l+/it/[]/ {/}?/j|/()=/~!/-//<>/\"/^_/';/,:/`./             //
-            return charLine[charNum];
+            return charLine[(int)(nunInList / charNum)];
         }
     }
 }

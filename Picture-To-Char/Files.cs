@@ -21,19 +21,19 @@ namespace Picture_To_Char
             return line; 
         }
 
-        public static void WriteToTXT(int colorCount, string charLine, string path, int height, int width)
+        public static void WriteToTXT(List<int> values, int colorCount, string charLine, string path, int height, int width)
         {
             using (StreamWriter write = new StreamWriter(path, false))
             {
-                for (int i = 0; i < width; i++)
+                for (int i = 0; i < height; i++)
                 {
-                    write.Write("\n");
-                    for (int j = 0; j < height; j++)
+                    for (int j = 0; j < width; j++)
                     {
-                        double grayscale = TaskUtils.GetGrayScale(i, j);
+                        int grayscale = TaskUtils.GetGrayScale(j, i);
 
-                        write.Write(TaskUtils.GrayScaleToChar(colorCount, grayscale, charLine));
+                        write.Write(TaskUtils.GrayScaleToChar(values, colorCount, grayscale, charLine));
                     }
+                    write.Write("\n");
                 }
             }
         }

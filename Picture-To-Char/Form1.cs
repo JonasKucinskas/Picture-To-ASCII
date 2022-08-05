@@ -33,16 +33,15 @@ namespace Picture_To_Char
                 File.Copy(filePath, Path.Combine(path, fileName));
             }
 
-            List<double> values = TaskUtils.GetGrayScaleList();
+            List<int> values = TaskUtils.GetGrayScaleList();
 
             double lightestValue = values[0];
             double darkestValue = values[values.Count - 1];
 
             string line = Files.GetCharLine();
-            int charPerColor = values.Count / line.Length;
 
 
-            Files.WriteToTXT(values.Distinct().Count(), line, path + "\\text.txt", 376, 457);
+            Files.WriteToTXT(values, values.Distinct().Count(), line, path + "\\text.txt", 400, 500);
 
 
         }
