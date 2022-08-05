@@ -21,29 +21,28 @@ namespace Picture_To_Char
         private void button2_Click(object sender, EventArgs e)
         {
             string path = Environment.CurrentDirectory + "\\Pictures";
+            string charPath = Environment.CurrentDirectory + "\\Data\\ASCII.txt";
+            string txtPath = Environment.CurrentDirectory + "\\Data\\text.txt";
 
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Multiselect = true;
+
+            string filePath = "";
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                //Path.GetFileName(dialog.FileName))
-                string filePath = dialog.FileName;//Gets directory for all word files.
-                string fileName = Path.GetFileName(filePath);//get filename from path
-                File.Copy(filePath, Path.Combine(path, fileName));
+                filePath = dialog.FileName;
+                //File.Copy(filePath, Path.Combine(path, fileName));
             }
 
-            List<int> values = TaskUtils.GetGrayScaleList();
+            Bitmap image = new Bitmap(filePath);
+            List<double> values = TaskUtils.GetGrayScaleList(image);
 
             double lightestValue = values[0];
             double darkestValue = values[values.Count - 1];
 
-            string line = Files.GetCharLine();
+            string charLine = Files.GetCharLine(charPath);
 
-
-            Files.WriteToTXT(values, values.Distinct().Count(), line, path + "\\text.txt", 400, 500);
-
-
+            Files.WriteToTXT(values, charLine, txtPath, image);
         }
     }
 }
