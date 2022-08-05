@@ -33,6 +33,10 @@ namespace Picture_To_Char
         {
             int grayscale;
 
+
+
+
+
             using (Bitmap img = new Bitmap(Environment.CurrentDirectory + "\\Pictures\\download.png"))
             {
                 Color color = img.GetPixel(i, j);
