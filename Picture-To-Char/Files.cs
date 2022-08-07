@@ -28,11 +28,8 @@ namespace Picture_To_Char
                     for (int j = 0; j < image.Width; j++)
                     {
                         Color color = image.GetPixel(j, i);
-                        int grayscale = (int)((0.299 * color.R) + (0.587 * color.G) + (0.114 * color.B));
 
-                        double charNum = (double)values.Count() / charLine.Length;//this is probably wrong, but it works for now.
-                        int numInList = values.IndexOf(grayscale);//
-                        char character = charLine[(int)(numInList / charNum)];//
+                        char character = GetChar(values, charLine, color);
 
                         //Write character three times to compensate for width difference.
                         //AA 
@@ -50,9 +47,23 @@ namespace Picture_To_Char
                     }
                 }
             }
-
-                
-
         }
+
+        public static char GetChar(List<double> values, string charLine, Color color)
+        {
+            int grayscale = (int)((0.299 * color.R) + (0.587 * color.G) + (0.114 * color.B));
+
+            double charNum = (double)values.Count() / charLine.Length;//this is probably wrong, but it works for now.
+            int numInList = values.IndexOf(grayscale);//
+            char character = charLine[(int)(numInList / charNum)];//
+
+            //Write character three times to compensate for width difference.
+            //AA 
+            //A
+            //two characters next to each other take less space than two rows.
+
+            return character;
+        }
+
     }
 }
