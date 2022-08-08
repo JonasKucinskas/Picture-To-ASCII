@@ -21,10 +21,6 @@ namespace Picture_To_Char
             InitializeComponent();
         }
 
-        List<double> values;
-        string charLine = Files.GetCharLine(Environment.CurrentDirectory + "\\Data\\ASCII.txt");
-        Bitmap image;
-
         private void button2_Click(object sender, EventArgs e)
         {
             string path = Environment.CurrentDirectory + "\\Pictures";
@@ -40,9 +36,10 @@ namespace Picture_To_Char
                 filePath = dialog.FileName;
             }
 
-            image = new Bitmap(filePath);
-            values = TaskUtils.GetGrayScaleList(image);
-            
+            Bitmap image = new Bitmap(filePath);
+            List<double>  values = TaskUtils.GetGrayScaleList(image);
+            string charLine = Files.GetCharLine(charPath);
+
 
             Files.WriteToTXT(values, charLine, txtPath, image);
             Process.Start(txtPath);//opens txt file to view.
@@ -50,23 +47,13 @@ namespace Picture_To_Char
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FilterInfoCollection filterInfo = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            VideoCaptureDevice webCam = new VideoCaptureDevice(filterInfo[0].MonikerString);
-            webCam.NewFrame += WebCam_NewFrame;
-            webCam.Start();
+            Form2 form2 = new Form2();
+            form2.Show();
+
+
+
 
             //Process.Start(Environment.CurrentDirectory + "\\Data\\LiveText.txt");
-        }
-
-        FileInfo file = new FileInfo(Environment.CurrentDirectory + "\\Data\\LiveText.txt");
-        private void WebCam_NewFrame(object sender, NewFrameEventArgs eventArgs)
-        {
-            image = new Bitmap(eventArgs.Frame);
-            values = TaskUtils.GetGrayScaleList(image);
-            charLine = Files.GetCharLine(Environment.CurrentDirectory + "\\Data\\ASCII.txt");
-
-            Files.WriteToTXT(values, charLine, Environment.CurrentDirectory + "\\Data\\LiveText.txt", image);
-            file.Refresh();
         }
     }
 }
