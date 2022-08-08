@@ -41,7 +41,7 @@ namespace Picture_To_Char
                         write.Write(tripleChar);
                     }
 
-                    if (i < image.Height)
+                    if (i < image.Height - 1)//-1 to fix blank row at the end of the file. 
                     {
                         write.Write("\n");
                     }
@@ -57,13 +57,28 @@ namespace Picture_To_Char
             int numInList = values.IndexOf(grayscale);//
             char character = charLine[(int)(numInList / charNum)];//
 
-            //Write character three times to compensate for width difference.
-            //AA 
-            //A
-            //two characters next to each other take less space than two rows.
-
             return character;
         }
 
+        public static void ProcessFrame(Bitmap image, string charLine, List<double> values, PictureBox picBox)
+        {
+            Image mainImage = new Bitmap(1, 1);
+            for (int i = 0; i < image.Height; i++)
+            {
+                for (int j = 0; j < image.Width; j++)
+                {
+                    Color color = image.GetPixel(j, i);
+                    char character = GetChar(values, charLine, color);
+                    string tripleChar = string.Format("{0}{0}{0}", character);
+                    
+
+                }
+            }
+
+            picBox.Image = mainImage;
+
+        }
+
+        
     }
 }
