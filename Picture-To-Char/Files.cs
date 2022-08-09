@@ -38,7 +38,7 @@ namespace Picture_To_Char
 
                         string tripleChar = string.Format("{0}{0}{0}", character);
 
-                        write.Write(tripleChar);
+                        write.Write(character);
                     }
 
                     if (i < image.Height - 1)//-1 to fix blank row at the end of the file. 
@@ -70,8 +70,6 @@ namespace Picture_To_Char
                     Color color = image.GetPixel(j, i);
                     char character = GetChar(values, charLine, color);
                     string tripleChar = string.Format("{0}{0}{0}", character);
-                    
-
                 }
             }
 

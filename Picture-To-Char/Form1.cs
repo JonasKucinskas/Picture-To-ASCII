@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -35,13 +37,26 @@ namespace Picture_To_Char
             {
                 filePath = dialog.FileName;
             }
+            int scale = 3;
 
             Bitmap image = new Bitmap(filePath);
-            List<double>  values = TaskUtils.GetGrayScaleList(image);
+            
+
+
+            Bitmap b = new Bitmap(image.Width / scale, image.Height / scale);
+            Graphics g = Graphics.FromImage(b);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            // Draw image with new width and height  
+            g.DrawImage(image, 0, 0, image.Width / scale, image.Height / scale);
+            g.Dispose();
+
+            //b.Save(@"C:\Users\Gaming\Desktop\image.jpeg", ImageFormat.Jpeg);
+            
+
+            List<double> values = TaskUtils.GetGrayScaleList(b);
             string charLine = Files.GetCharLine(charPath);
 
-
-            Files.WriteToTXT(values, charLine, txtPath, image);
+            Files.WriteToTXT(values, charLine, txtPath, b);
             Process.Start(txtPath);//opens txt file to view.
         }
 
