@@ -28,15 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectWebcamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.videoQualityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsWebcamDropDown = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripComboBox2 = new System.Windows.Forms.ToolStripComboBox();
+            this.videoQualityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoScaleSelectorTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.pictureQualityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureScale_TextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.menuStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // button2
@@ -69,7 +74,7 @@
             this.settingsToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(189, 24);
+            this.menuStrip2.Size = new System.Drawing.Size(69, 24);
             this.menuStrip2.TabIndex = 4;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -77,10 +82,12 @@
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.selectWebcamToolStripMenuItem,
-            this.videoQualityToolStripMenuItem});
+            this.videoQualityToolStripMenuItem,
+            this.pictureQualityToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.DropDownOpening += new System.EventHandler(this.settingsToolStripMenuItem_DropDownOpening);
             // 
             // selectWebcamToolStripMenuItem
             // 
@@ -90,23 +97,45 @@
             this.selectWebcamToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.selectWebcamToolStripMenuItem.Text = "Select webcam";
             // 
-            // videoQualityToolStripMenuItem
-            // 
-            this.videoQualityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBox2});
-            this.videoQualityToolStripMenuItem.Name = "videoQualityToolStripMenuItem";
-            this.videoQualityToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.videoQualityToolStripMenuItem.Text = "Video Quality";
-            // 
             // SettingsWebcamDropDown
             // 
             this.SettingsWebcamDropDown.Name = "SettingsWebcamDropDown";
             this.SettingsWebcamDropDown.Size = new System.Drawing.Size(121, 23);
+            this.SettingsWebcamDropDown.SelectedIndexChanged += new System.EventHandler(this.SettingsWebcamDropDown_SelectedIndexChanged);
             // 
-            // toolStripComboBox2
+            // videoQualityToolStripMenuItem
             // 
-            this.toolStripComboBox2.Name = "toolStripComboBox2";
-            this.toolStripComboBox2.Size = new System.Drawing.Size(121, 23);
+            this.videoQualityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.videoScaleSelectorTextBox});
+            this.videoQualityToolStripMenuItem.Name = "videoQualityToolStripMenuItem";
+            this.videoQualityToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.videoQualityToolStripMenuItem.Text = "Video Quality";
+            // 
+            // videoScaleSelectorTextBox
+            // 
+            this.videoScaleSelectorTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.videoScaleSelectorTextBox.Name = "videoScaleSelectorTextBox";
+            this.videoScaleSelectorTextBox.Size = new System.Drawing.Size(100, 23);
+            this.videoScaleSelectorTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.webcamScaleSelected_keydown);
+            // 
+            // pictureQualityToolStripMenuItem
+            // 
+            this.pictureQualityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pictureScale_TextBox});
+            this.pictureQualityToolStripMenuItem.Name = "pictureQualityToolStripMenuItem";
+            this.pictureQualityToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pictureQualityToolStripMenuItem.Text = "Picture Quality";
+            // 
+            // pictureScale_TextBox
+            // 
+            this.pictureScale_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.pictureScale_TextBox.Name = "pictureScale_TextBox";
+            this.pictureScale_TextBox.Size = new System.Drawing.Size(100, 23);
+            this.pictureScale_TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.pictureScale_TextBox_KeyDown);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // Form1
             // 
@@ -120,6 +149,7 @@
             this.Text = "Form1";
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -134,7 +164,10 @@
         private System.Windows.Forms.ToolStripMenuItem selectWebcamToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox SettingsWebcamDropDown;
         private System.Windows.Forms.ToolStripMenuItem videoQualityToolStripMenuItem;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox2;
+        private System.Windows.Forms.ToolStripTextBox videoScaleSelectorTextBox;
+        private System.Windows.Forms.ToolStripMenuItem pictureQualityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox pictureScale_TextBox;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
 
