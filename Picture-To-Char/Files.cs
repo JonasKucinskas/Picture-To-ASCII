@@ -19,7 +19,7 @@ namespace Picture_To_Char
             }
         }
 
-        public static void WriteToTXT(List<double> values, string charLine, string filePath, Bitmap image)
+        public static void WriteToTXT(List<double> values, string charLine, string filePath, Bitmap image, bool forVideo)
         {
             using (StreamWriter write = new StreamWriter(filePath, false))
             {
@@ -36,9 +36,14 @@ namespace Picture_To_Char
                         //A
                         //two characters next to each other take less space than two rows.
 
-                        string tripleChar = string.Format("{0}{0}{0}", character);
 
-                        write.Write(character);
+
+                        string tripleChar = string.Format("{0}{0}{0}", character);
+                        if (forVideo)
+                        {
+                            write.Write(character);
+                        }
+                        else write.Write(tripleChar);
                     }
 
                     if (i < image.Height - 1)//-1 to fix blank row at the end of the file. 
@@ -77,6 +82,22 @@ namespace Picture_To_Char
 
         }
 
-        
+        public static void DisplayTextFromFile(RichTextBox textBox, string path)
+        {
+            using (StreamReader read = new StreamReader(path))
+            {
+                string line;
+                textBox.Multiline = true;
+                while (read.ReadLine() != null)
+                {
+                    line = read.ReadLine();
+
+                    textBox.AppendText(line);
+                    textBox.AppendText("\n");
+                }
+            }
+            textBox.Update();
+
+        }
     }
 }

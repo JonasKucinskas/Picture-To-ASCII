@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace Picture_To_Char
 {
@@ -20,43 +21,7 @@ namespace Picture_To_Char
         public static List<double> GetGrayScaleList(Bitmap image)
         {
             List<double> values = new List<double>();
-            //List<double> tempGrayScale;
-            //////
-            //
-            //
-
-            /*
-            for (int i = 0; i < image.Height; i+=scale)
-            {
-
-                for (int j = 0; j < image.Width; j+=scale)
-                {
-                    tempGrayScale = new List<double>();
-                    for (int k = i; k < i+scale; k++)
-                    {
-                        for (int l = j; l < j+scale; l++)
-                        {
-                            if (i + scale < image.Height && j + scale < image.Width)
-                            {
-                                Color color = image.GetPixel(l, k);
-                                double grayscale = (int)((0.299 * color.R) + (0.587 * color.G) + (0.114 * color.B));
-                                tempGrayScale.Add(grayscale);
-                            }
-                        }
-                    }
-
-                    if (tempGrayScale.Count > 0)
-                    {
-                        double grayScaleAvg = tempGrayScale.Average();
-
-                        if (!values.Contains(grayScaleAvg))
-                        {
-                            values.Add(grayScaleAvg);
-                        }
-                    }
-                }
-            }
-            */
+            
             for (int i = 0; i < image.Height; i++)
             {
                 for (int j = 0; j < image.Width; j++)
@@ -73,6 +38,18 @@ namespace Picture_To_Char
 
             values.Sort();
             return values;
+        }
+
+        public static Bitmap resizedPicture(Bitmap image, int scale)
+        {
+            Bitmap b = new Bitmap(image.Width / scale, image.Height / scale);
+            Graphics g = Graphics.FromImage(b);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            // Draw image with new width and height  
+            g.DrawImage(image, 0, 0, image.Width / scale, image.Height / scale);
+            g.Dispose();
+
+            return b;
         }
     }
 }
