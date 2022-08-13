@@ -36,8 +36,6 @@ namespace Picture_To_Char
                         //A
                         //two characters next to each other take less space than two rows.
 
-
-
                         string tripleChar = string.Format("{0}{0}{0}", character);
                         if (forVideo)
                         {
@@ -65,38 +63,28 @@ namespace Picture_To_Char
             return character;
         }
 
-        public static void ProcessFrame(Bitmap image, string charLine, List<double> values, PictureBox picBox)
-        {
-            Image mainImage = new Bitmap(1, 1);
-            for (int i = 0; i < image.Height; i++)
-            {
-                for (int j = 0; j < image.Width; j++)
-                {
-                    Color color = image.GetPixel(j, i);
-                    char character = GetChar(values, charLine, color);
-                    string tripleChar = string.Format("{0}{0}{0}", character);
-                }
-            }
-
-            picBox.Image = mainImage;
-
-        }
-
         public static void DisplayTextFromFile(RichTextBox textBox, string path)
         {
+            
+
             using (StreamReader read = new StreamReader(path))
             {
                 string line;
-                textBox.Multiline = true;
+                string frame = "";
+
                 while (read.ReadLine() != null)
                 {
                     line = read.ReadLine();
 
-                    textBox.AppendText(line);
-                    textBox.AppendText("\n");
+                    frame += line;
+                    frame += "\n";
+                    //textBox.AppendText(line);
+                    //textBox.AppendText("\n");
                 }
+                textBox.Text = frame;
+                //textBox.AppendText(frame);
             }
-            textBox.Update();
+            
 
         }
     }
