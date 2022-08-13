@@ -29,19 +29,17 @@ namespace Picture_To_Char
             {
                 webCam = new VideoCaptureDevice(filterInfo[Properties.Settings.Default.webcamIndex].MonikerString);
                 webCam.Start();
+                //webCam.VideoResolution = webCam.VideoCapabilities[5];
                 webCam.NewFrame += WebCam_NewFrame1;
             }
             catch
             {
                 MessageBox.Show("No WebCam detected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
 
         private void WebCam_NewFrame1(object sender, NewFrameEventArgs eventArgs)
         {
-
-
             Bitmap image = new Bitmap(eventArgs.Frame);
             Bitmap resizedPic = TaskUtils.resizedPicture(image, videoScale);
 
@@ -49,10 +47,8 @@ namespace Picture_To_Char
             string charLine = Files.GetCharLine(Environment.CurrentDirectory + "\\Data\\ASCII.txt");
 
             Files.WriteToTXT(values, charLine, Environment.CurrentDirectory + "\\Data\\LiveText.txt", resizedPic, true);
-            richTextBox1.ZoomFactor = 3.0f;
 
             Files.DisplayTextFromFile(richTextBox1, Environment.CurrentDirectory + "\\Data\\LiveText.txt");
-            richTextBox1.Clear();
 
         }
 
