@@ -58,5 +58,16 @@ namespace Picture_To_Char.Properties {
                 this["videoScale"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::AForge.Video.DirectShow.VideoCaptureDevice webcamObject {
+            get {
+                return ((global::AForge.Video.DirectShow.VideoCaptureDevice)(this["webcamObject"]));
+            }
+            set {
+                this["webcamObject"] = value;
+            }
+        }
     }
 }
