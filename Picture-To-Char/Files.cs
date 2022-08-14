@@ -19,7 +19,7 @@ namespace Picture_To_Char
             }
         }
 
-        public static void WriteToTXT(List<double> values, string charLine, string filePath, Bitmap image, bool forVideo)
+        public static void WriteToTXT(List<double> values, string charLine, string filePath, Bitmap image)
         {
             using (StreamWriter write = new StreamWriter(filePath, false))
             {
@@ -29,7 +29,7 @@ namespace Picture_To_Char
                     {
                         Color color = image.GetPixel(j, i);
 
-                        char character = GetChar(values, charLine, color);
+                        char character = TaskUtils.GetChar(values, charLine, color);
 
                         //Write character three times to compensate for width difference.
                         //AA 
@@ -37,11 +37,7 @@ namespace Picture_To_Char
                         //two characters next to each other take less space than two rows.
 
                         string tripleChar = string.Format("{0}{0}{0}", character);
-                        if (forVideo)
-                        {
-                            write.Write(character);
-                        }
-                        else write.Write(tripleChar);
+                        write.Write(tripleChar);
                     }
 
                     if (i < image.Height - 1)//-1 to fix blank row at the end of the file. 
@@ -52,21 +48,30 @@ namespace Picture_To_Char
             }
         }
 
-        public static char GetChar(List<double> values, string charLine, Color color)
+        public static void SetFrame(RichTextBox textbox, List<double> values, string charLine, Bitmap image)
         {
-            int grayscale = (int)((0.299 * color.R) + (0.587 * color.G) + (0.114 * color.B));
+            string frame = "";
 
-            double charNum = (double)values.Count() / charLine.Length;//this is probably wrong, but it works for now.
-            int numInList = values.IndexOf(grayscale);//
-            char character = charLine[(int)(numInList / charNum)];//
+            for (int i = 0; i < image.Height; i++)
+            {
+                for (int j = 0; j < image.Width; j++)
+                {
+                    Color color = image.GetPixel(j, i);
 
-            return character;
+                    frame += TaskUtils.GetChar(values, charLine, color);
+                }
+
+                if (i < image.Height - 1)//-1 to fix blank row at the end of the file. 
+                {
+                    frame += "\n";
+                }
+            }
+
+            textbox.Text = frame;
         }
 
         public static void DisplayTextFromFile(RichTextBox textBox, string path)
         {
-            
-
             using (StreamReader read = new StreamReader(path))
             {
                 string line;
@@ -84,8 +89,6 @@ namespace Picture_To_Char
                 textBox.Text = frame;
                 //textBox.AppendText(frame);
             }
-            
-
         }
     }
 }

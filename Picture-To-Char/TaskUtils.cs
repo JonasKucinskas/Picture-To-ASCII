@@ -16,7 +16,6 @@ namespace Picture_To_Char
         /// Gets list of all gray scale values of image.
         /// </summary>
         /// <param name="image"></param>
-        /// <param name="scale">scale for conversion to character. if scale is 1: 1*1 pixel = 1 character. If scale is 3 : 3*3 pixels = 1 character, etc.</param>
         /// <returns></returns>
         public static List<double> GetGrayScaleList(Bitmap image)
         {
@@ -38,6 +37,16 @@ namespace Picture_To_Char
 
             values.Sort();
             return values;
+        }
+
+        public static char GetChar(List<double> values, string charLine, Color color)
+        {
+            int grayscale = (int)((0.299 * color.R) + (0.587 * color.G) + (0.114 * color.B));//Fancy formula to convert colour to grayscale value.
+            double charNum = (double)values.Count() / charLine.Length;//this is probably wrong, but it works for now.
+            int numInList = values.IndexOf(grayscale);//
+            char character = charLine[(int)(numInList / charNum)];//
+
+            return character;
         }
 
         public static Bitmap resizedPicture(Bitmap image, int scale)

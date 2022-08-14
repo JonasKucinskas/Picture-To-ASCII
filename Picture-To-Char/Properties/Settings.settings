@@ -11,5 +11,8 @@
     <Setting Name="videoScale" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4</Value>
     </Setting>
+    <Setting Name="webcamObject" Type="AForge.Video.DirectShow.VideoCaptureDevice" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
