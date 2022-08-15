@@ -51,14 +51,13 @@ namespace Picture_To_Char
         public static void SetFrame(RichTextBox textbox, List<double> values, string charLine, Bitmap image)
         {
             string frame = "";
-
             for (int i = 0; i < image.Height; i++)
             {
                 for (int j = 0; j < image.Width; j++)
                 {
                     Color color = image.GetPixel(j, i);
 
-                    frame += TaskUtils.GetChar(values, charLine, color);
+                    frame += TaskUtils.GetChar(values, charLine, color); ;
                 }
 
                 if (i < image.Height - 1)//-1 to fix blank row at the end of the file. 
@@ -67,7 +66,11 @@ namespace Picture_To_Char
                 }
             }
 
-            textbox.Text = frame;
+            if (textbox.InvokeRequired && textbox.IsDisposed == false)
+            {
+                textbox.Invoke(new MethodInvoker(delegate { textbox.Text = frame; }));
+            }
+
         }
 
         public static void DisplayTextFromFile(RichTextBox textBox, string path)
