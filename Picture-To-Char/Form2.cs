@@ -19,16 +19,17 @@ namespace Picture_To_Char
         VideoCaptureDevice webCam;
         int videoScale = Properties.Settings.Default.videoScale;
 
-        public Form2()
+        public Form2() 
         {
             InitializeComponent();
 
-            FilterInfoCollection infoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            FilterInfoCollection filterInfo = new FilterInfoCollection(FilterCategory.VideoInputDevice);
 
             try
             {
-                webCam = Properties.Settings.Default.webcamObject;
-                         //new VideoCaptureDevice(infoCollection[Properties.Settings.Default.webcamIndex].MonikerString);
+                webCam = new VideoCaptureDevice(filterInfo[Properties.Settings.Default.webcamIndex].MonikerString);
+                webCam.VideoResolution = webCam.VideoCapabilities[Properties.Settings.Default.webCamResolutionIndex];
+                //new VideoCaptureDevice(infoCollection[Properties.Settings.Default.webcamIndex].MonikerString);
                 webCam.Start();
                 //webCam.VideoResolution = webCam.VideoCapabilities[5];
                 webCam.NewFrame += WebCam_NewFrame1;
@@ -38,21 +39,37 @@ namespace Picture_To_Char
                 MessageBox.Show("No WebCam detected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         string charLine = Files.GetCharLine(Environment.CurrentDirectory + "\\Data\\ASCII.txt");
         private void WebCam_NewFrame1(object sender, NewFrameEventArgs eventArgs)
         {
-            Bitmap image = TaskUtils.resizedPicture(eventArgs.Frame, videoScale);
+
+            Bitmap image;
+            if (videoScale > 1)
+            {
+                image = TaskUtils.resizedPicture(eventArgs.Frame, videoScale);
+            }
+            else image = eventArgs.Frame;
+
+
 
             List<double> values = TaskUtils.GetGrayScaleList(image);
-
-            //Files.WriteToTXT(values, charLine, Environment.CurrentDirectory + "\\Data\\LiveText.txt", resizedPic, true);
-
-            //Files.DisplayTextFromFile(richTextBox1, Environment.CurrentDirectory + "\\Data\\LiveText.txt");
-
+            //Files.WriteToTXT(values, charLine, Environment.CurrentDirectory + "\\Data\\LiveText.txt", image);
 
             Files.SetFrame(richTextBox1, values, charLine, image);
         }
 
-       
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (webCam != null)
+            {
+                if (webCam.IsRunning)//Close webcam object
+                {
+                    webCam.SignalToStop();
+                    webCam = null;
+                }
+            }
+
+        }
     }
 }

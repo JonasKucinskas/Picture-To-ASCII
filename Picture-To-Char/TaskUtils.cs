@@ -51,11 +51,11 @@ namespace Picture_To_Char
 
         public static Bitmap resizedPicture(Bitmap image, int scale)
         {
-            Bitmap b = new Bitmap(image.Width / scale, image.Height / scale);
+            Bitmap b = new Bitmap(image.Width / scale, image.Height / scale / 2);
             Graphics g = Graphics.FromImage(b);
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             // Draw image with new width and height  
-            g.DrawImage(image, 0, 0, image.Width / scale, image.Height / scale);
+            g.DrawImage(image, 0, 0, image.Width / scale, image.Height / scale / 2);
             g.Dispose();
 
             return b;

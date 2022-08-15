@@ -27,27 +27,31 @@ namespace Picture_To_Char
             FilterInfoCollection filterInfo = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             webCam = new VideoCaptureDevice(filterInfo[Properties.Settings.Default.webcamIndex].MonikerString);
 
-            Properties.Settings.Default.webcamObject = webCam;
-
             foreach (var item in webCam.VideoCapabilities)
             {
-                ResolutionComboBox.Items.Add(string.Format("{0} X {1}",item.FrameSize.Height, item.FrameSize.Width));
+                ResolutionComboBox.Items.Add(item.FrameSize);
             }
+
+            webCam = null;
 
             foreach (FilterInfo webCam in filterInfo)
             {
                 SelectWebCamComboBox.Items.Add(webCam.Name);
             }
-            SelectWebCamComboBox.SelectedIndex = Properties.Settings.Default.webcamIndex;
 
-            //
+            SelectWebCamComboBox.SelectedIndex = Properties.Settings.Default.webcamIndex;
             videoDownScaleTextBox.Text = Properties.Settings.Default.videoScale.ToString();
             PictureDownScaleTextBox.Text = Properties.Settings.Default.pictureScale.ToString();
-            //ResolutionComboBox.Text = WebCamResolutionDropDown.Items[0].ToString();//If resolution is not changed, program takes first available value.
-            //
+            ResolutionComboBox.SelectedIndex = Properties.Settings.Default.webCamResolutionIndex;
         }
-        
-        private void button2_Click(object sender, EventArgs e)
+
+        private void WebcamButton_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.Show();
+        }
+
+        private void PictureButton_Click(object sender, EventArgs e)
         {
             string charPath = Environment.CurrentDirectory + "\\Data\\ASCII.txt";
             string txtPath = Environment.CurrentDirectory + "\\Data\\text.txt";
@@ -71,74 +75,49 @@ namespace Picture_To_Char
 
             Files.WriteToTXT(values, charLine, txtPath, resizedPic);
             Process.Start(txtPath);//opens txt file to view.
-            
         }
 
-
-        private void button1_Click(object sender, EventArgs e)
+        private void ResolutionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            Form2 form2 = new Form2();
-            form2.Show();
-            
-            //Process.Start(Environment.CurrentDirectory + "\\Data\\LiveText.txt");
+            Properties.Settings.Default.webCamResolutionIndex = ResolutionComboBox.SelectedIndex;
         }
 
-        private void settingsToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        private void videoDownScaleTextBox_TextChanged(object sender, EventArgs e)
         {
-            
-            
-        }
-
-        private void WebCamResolutionDropDown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            webCam.VideoResolution = webCam.VideoCapabilities[WebCamResolutionDropDown.SelectedIndex];
-        }
-
-        private void webcamSelectDropDown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.webcamIndex = SelectWebCamComboBox.SelectedIndex;
-        }
-
-        private void videoScaleSelectorTextBox_TextChanged(object sender, EventArgs e)
-        {
-            
             try
             {
                 Properties.Settings.Default.videoScale = Convert.ToInt32(videoDownScaleTextBox.Text);
+                Properties.Settings.Default.Save();
+
             }
             catch
             {
                 videoDownScaleTextBox.ForeColor = Color.Red;
                 videoDownScaleTextBox.Text = "Wrong input";
             }
-            
+
         }
 
-        private void pictureScale_TextBox_TextChanged(object sender, EventArgs e)
+        private void PictureDownScaleTextBox_TextChanged(object sender, EventArgs e)
         {
-            
             try
             {
                 PictureDownScaleTextBox.ForeColor = Color.Black;
                 Properties.Settings.Default.pictureScale = Convert.ToInt32(PictureDownScaleTextBox.Text);
+                Properties.Settings.Default.Save();
+
             }
             catch
             {
                 PictureDownScaleTextBox.ForeColor = Color.Red;
                 PictureDownScaleTextBox.Text = "Wrong input";
             }
-            
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void SelectWebCamComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            if (webCam.IsRunning)
-            {
-                webCam.Stop();
-            }
+            Properties.Settings.Default.webcamIndex = SelectWebCamComboBox.SelectedIndex;
+            Properties.Settings.Default.Save();
         }
-        
     }
 }

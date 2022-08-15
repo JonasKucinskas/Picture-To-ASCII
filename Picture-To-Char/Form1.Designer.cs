@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.PictureButton = new System.Windows.Forms.Button();
+            this.WebcamButton = new System.Windows.Forms.Button();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.WebCamSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.WebCamResolutionMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,25 +54,31 @@
             this.ManuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button2
+            // PictureButton
             // 
-            this.button2.Location = new System.Drawing.Point(159, 27);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(141, 61);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Picture";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.PictureButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PictureButton.Location = new System.Drawing.Point(159, 27);
+            this.PictureButton.Name = "PictureButton";
+            this.PictureButton.Size = new System.Drawing.Size(141, 61);
+            this.PictureButton.TabIndex = 1;
+            this.PictureButton.Text = "Picture";
+            this.PictureButton.UseVisualStyleBackColor = true;
+            this.PictureButton.Click += new System.EventHandler(this.PictureButton_Click);
             // 
-            // button1
+            // WebcamButton
             // 
-            this.button1.Location = new System.Drawing.Point(12, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(141, 61);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Video";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.WebcamButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.WebcamButton.Location = new System.Drawing.Point(12, 27);
+            this.WebcamButton.Name = "WebcamButton";
+            this.WebcamButton.Size = new System.Drawing.Size(141, 61);
+            this.WebcamButton.TabIndex = 2;
+            this.WebcamButton.Text = "Webcam";
+            this.WebcamButton.UseVisualStyleBackColor = true;
+            this.WebcamButton.Click += new System.EventHandler(this.WebcamButton_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -82,7 +88,6 @@
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.DropDownOpening += new System.EventHandler(this.settingsToolStripMenuItem_DropDownOpening);
             // 
             // WebCamSettings
             // 
@@ -106,7 +111,6 @@
             // 
             this.WebCamResolutionDropDown.Name = "WebCamResolutionDropDown";
             this.WebCamResolutionDropDown.Size = new System.Drawing.Size(121, 23);
-            this.WebCamResolutionDropDown.SelectedIndexChanged += new System.EventHandler(this.WebCamResolutionDropDown_SelectedIndexChanged);
             // 
             // WebcamSelectMenu
             // 
@@ -120,7 +124,6 @@
             // 
             this.webcamSelectDropDown.Name = "webcamSelectDropDown";
             this.webcamSelectDropDown.Size = new System.Drawing.Size(121, 23);
-            this.webcamSelectDropDown.SelectedIndexChanged += new System.EventHandler(this.webcamSelectDropDown_SelectedIndexChanged);
             // 
             // videoDownScale
             // 
@@ -135,7 +138,6 @@
             this.videoScaleSelectorTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.videoScaleSelectorTextBox.Name = "videoScaleSelectorTextBox";
             this.videoScaleSelectorTextBox.Size = new System.Drawing.Size(100, 23);
-            this.videoScaleSelectorTextBox.TextChanged += new System.EventHandler(this.videoScaleSelectorTextBox_TextChanged);
             // 
             // pictureQualityToolStripMenuItem
             // 
@@ -150,7 +152,6 @@
             this.pictureScale_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.pictureScale_TextBox.Name = "pictureScale_TextBox";
             this.pictureScale_TextBox.Size = new System.Drawing.Size(100, 23);
-            this.pictureScale_TextBox.TextChanged += new System.EventHandler(this.pictureScale_TextBox_TextChanged);
             // 
             // ManuStrip1
             // 
@@ -178,7 +179,7 @@
             this.ResolutionMenu,
             this.videoDownscaleMenu});
             this.WebcamMenu.Name = "WebcamMenu";
-            this.WebcamMenu.Size = new System.Drawing.Size(180, 22);
+            this.WebcamMenu.Size = new System.Drawing.Size(170, 22);
             this.WebcamMenu.Text = "Webcam";
             // 
             // SelectWebcamMenu
@@ -186,33 +187,37 @@
             this.SelectWebcamMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.SelectWebCamComboBox});
             this.SelectWebcamMenu.Name = "SelectWebcamMenu";
-            this.SelectWebcamMenu.Size = new System.Drawing.Size(180, 22);
+            this.SelectWebcamMenu.Size = new System.Drawing.Size(163, 22);
             this.SelectWebcamMenu.Text = "Select webcam";
             // 
             // SelectWebCamComboBox
             // 
             this.SelectWebCamComboBox.Name = "SelectWebCamComboBox";
             this.SelectWebCamComboBox.Size = new System.Drawing.Size(121, 23);
+            this.SelectWebCamComboBox.SelectedIndexChanged += new System.EventHandler(this.SelectWebCamComboBox_SelectedIndexChanged);
             // 
             // ResolutionMenu
             // 
             this.ResolutionMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ResolutionComboBox});
             this.ResolutionMenu.Name = "ResolutionMenu";
-            this.ResolutionMenu.Size = new System.Drawing.Size(180, 22);
+            this.ResolutionMenu.Size = new System.Drawing.Size(163, 22);
             this.ResolutionMenu.Text = "Resolution";
             // 
             // ResolutionComboBox
             // 
+            this.ResolutionComboBox.DropDownWidth = 155;
+            this.ResolutionComboBox.MaxDropDownItems = 15;
             this.ResolutionComboBox.Name = "ResolutionComboBox";
             this.ResolutionComboBox.Size = new System.Drawing.Size(121, 23);
+            this.ResolutionComboBox.SelectedIndexChanged += new System.EventHandler(this.ResolutionComboBox_SelectedIndexChanged);
             // 
             // videoDownscaleMenu
             // 
             this.videoDownscaleMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.videoDownScaleTextBox});
             this.videoDownscaleMenu.Name = "videoDownscaleMenu";
-            this.videoDownscaleMenu.Size = new System.Drawing.Size(180, 22);
+            this.videoDownscaleMenu.Size = new System.Drawing.Size(163, 22);
             this.videoDownscaleMenu.Text = "Video downscale";
             // 
             // videoDownScaleTextBox
@@ -220,13 +225,14 @@
             this.videoDownScaleTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.videoDownScaleTextBox.Name = "videoDownScaleTextBox";
             this.videoDownScaleTextBox.Size = new System.Drawing.Size(100, 23);
+            this.videoDownScaleTextBox.TextChanged += new System.EventHandler(this.videoDownScaleTextBox_TextChanged);
             // 
             // PictureMenu
             // 
             this.PictureMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.PictureDownScaleTextBox});
             this.PictureMenu.Name = "PictureMenu";
-            this.PictureMenu.Size = new System.Drawing.Size(180, 22);
+            this.PictureMenu.Size = new System.Drawing.Size(170, 22);
             this.PictureMenu.Text = "Picture downscale";
             // 
             // PictureDownScaleTextBox
@@ -234,18 +240,18 @@
             this.PictureDownScaleTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.PictureDownScaleTextBox.Name = "PictureDownScaleTextBox";
             this.PictureDownScaleTextBox.Size = new System.Drawing.Size(100, 23);
+            this.PictureDownScaleTextBox.TextChanged += new System.EventHandler(this.PictureDownScaleTextBox_TextChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(311, 101);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.WebcamButton);
+            this.Controls.Add(this.PictureButton);
             this.Controls.Add(this.ManuStrip1);
             this.Name = "Form1";
-            this.Text = "Form1";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Text = "PictureASCII";
             this.ManuStrip1.ResumeLayout(false);
             this.ManuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -255,8 +261,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button PictureButton;
+        private System.Windows.Forms.Button WebcamButton;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem WebCamSettings;
         private System.Windows.Forms.ToolStripMenuItem pictureQualityToolStripMenuItem;
