@@ -73,25 +73,6 @@ namespace Picture_To_Char
 
         }
 
-        public static void DisplayTextFromFile(RichTextBox textBox, string path)
-        {
-            using (StreamReader read = new StreamReader(path))
-            {
-                string line;
-                string frame = "";
-
-                while (read.ReadLine() != null)
-                {
-                    line = read.ReadLine();
-
-                    frame += line;
-                    frame += "\n";
-                    //textBox.AppendText(line);
-                    //textBox.AppendText("\n");
-                }
-                textBox.Text = frame;
-                //textBox.AppendText(frame);
-            }
-        }
+        
     }
 }
