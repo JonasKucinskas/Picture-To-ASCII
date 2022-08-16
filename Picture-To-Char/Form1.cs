@@ -95,7 +95,6 @@ namespace Picture_To_Char
                 videoDownScaleTextBox.ForeColor = Color.Red;
                 videoDownScaleTextBox.Text = "Wrong input";
             }
-
         }
 
         private void PictureDownScaleTextBox_TextChanged(object sender, EventArgs e)

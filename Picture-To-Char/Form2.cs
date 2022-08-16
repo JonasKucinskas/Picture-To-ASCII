@@ -43,20 +43,18 @@ namespace Picture_To_Char
         string charLine = Files.GetCharLine(Environment.CurrentDirectory + "\\Data\\ASCII.txt");
         private void WebCam_NewFrame1(object sender, NewFrameEventArgs eventArgs)
         {
-
             Bitmap image;
             if (videoScale > 1)
             {
                 image = TaskUtils.resizedPicture(eventArgs.Frame, videoScale);
             }
             else image = eventArgs.Frame;
-
-
-
             List<double> values = TaskUtils.GetGrayScaleList(image);
             //Files.WriteToTXT(values, charLine, Environment.CurrentDirectory + "\\Data\\LiveText.txt", image);
 
             Files.SetFrame(richTextBox1, values, charLine, image);
+
+            //TaskUtils.DisplayFrame(pictureBox1, values, charLine, image);//This converts text to image and then sets it in form2. This is slower than just displaying text.
         }
 
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
@@ -69,7 +67,6 @@ namespace Picture_To_Char
                     webCam = null;
                 }
             }
-
         }
     }
 }
